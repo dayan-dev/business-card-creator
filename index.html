@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html class='h-100' dir='ltr' lang='en-GB'>
+
+<head>
+  <meta charset='utf-8' />
+  <meta content='width=device-width, initial-scale=1' name='viewport' />
+
+  <!-- CSS only -->
+  <link href='css/bootstrap.min.css' rel='stylesheet' />
+  <link href='css/bootstrap-icons.css' rel='stylesheet' />
+
+  <!-- SCRIPT only -->
+  <script src='js/jquery.min.js'></script>
+  <script src='js/angular.min.js'></script>
+
+  <style>
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+
+      #capture,
+      #capture * {
+        visibility: visible;
+      }
+
+      #capture {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    }
+
+    #frontSide,
+    #backSide {
+      width: 385px;
+      min-width: 385px;
+      max-width: 385px;
+      height: 220px;
+      min-height: 220px;
+      max-height: 220px;
+    }
+  </style>
+  <title>Business Card Creator</title>
+
+
+</head>
+
+<body class='text-bg-dark h-100'>
+
+  <section>
+    <header>
+      <div class='container text-center p-3'>
+        <div class='mx-auto'>
+          <h1 class='fw-bolder mb-0'>
+            Business Card Creator
+          </h1>
+        </div>
+      </div>
+    </header>
+  </section>
+
+
+  <section>
+    <main>
+      <div class='container'>
+
+        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 my-3 d-flex justify-content-center align-items-center"
+          ng-app="cardApp" ng-controller="cardCtrl">
+
+          <!-- col 1 starts -->
+          <div class="col mb-3">
+
+            <div class="m-auto" style="width: 385px; min-width: 385px; max-width: 385px;">
+
+
+              <!-- card front side starts -->
+              <div class="rounded d-inline-flex justify-content-center align-items-center" id="frontSide"
+                style="background-color: {{defaultValues.card.color}}; border:solid 1px {{defaultValues.card.borderColor}};">
+
+
+                <div class="text-end m-1" ng-show="defaultValues.photo.show">
+                  <img height="100" loading="lazy" src="{{defaultValues.photo.url}}"
+                    style="border-radius: {{defaultValues.photo.size + &#39;px&#39;}};" width="100" />
+                </div>
+
+                <div class="text-center m-1">
+                  <p class="lh-1 m-0 fw-semibold mb-3 align-middle" ng-show="defaultValues.title.show">
+                    <span class="align-middle" ng-bind="defaultValues.title.text"
+                      style="font-size: {{defaultValues.title.size + 'px'}};color: {{defaultValues.title.color}};">
+                    </span>
+                  </p>
+
+                  <hr class="m-0 p-0 opacity-100"
+                    style="border-top: solid {{defaultValues.border.size + 'px'}} {{defaultValues.border.color}};"
+                    ng-show="defaultValues.border.show" />
+
+                  <p class="lh-1 m-0 fw-semibold mb-2 align-middle" ng-show="defaultValues.subTitle.show">
+                    <span class="align-middle" ng-bind="defaultValues.subTitle.text"
+                      style="font-size: {{defaultValues.subTitle.size + 'px'}};color: {{defaultValues.subTitle.color}};">
+                    </span>
+                  </p>
+
+                  <p class="lh-1 m-0 fw-semibold align-middle">
+                    <span class="bi bi-telephone-fill align-middle"
+                      style="font-size: {{defaultValues.icon.size + 'px'}};color: {{defaultValues.icon.color}};"
+                      ng-show="defaultValues.icon.show">
+                    </span>
+                    <span class="align-middle" ng-bind="defaultValues.number.text"
+                      style="font-size: {{defaultValues.number.size + 'px'}};color: {{defaultValues.number.color}};"
+                      ng-show="defaultValues.number.show">
+                    </span>
+                    <br />
+                    <span class="bi bi-envelope-fill align-middle"
+                      style="font-size: {{defaultValues.icon.size + 'px'}};color: {{defaultValues.icon.color}};"
+                      ng-show="defaultValues.icon.show">
+                    </span>
+                    <span class="align-middle" ng-bind="defaultValues.email.text"
+                      style="font-size: {{defaultValues.email.size + 'px'}};color: {{defaultValues.email.color}};"
+                      ng-show="defaultValues.email.show">
+                    </span>
+                  </p>
+                </div>
+              </div>
+              <!-- card front side ends -->
+
+
+              <div class="my-3 d-inline-flex justify-content-center align-items-center" style="width:385px;">
+                <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+                  <button type="button" class="btn btn-primary rounded-5 m-1 p-2" title="Design one">
+                    <span class="visually-hidden">
+                      Design one
+                    </span>
+                  </button>
+                  <button type="button" class="btn btn-primary rounded-5 m-1 p-2" title="Design two">
+                    <span class="visually-hidden">
+                      Design two
+                    </span>
+                  </button>
+                  <button type="button" class="btn btn-primary rounded-5 m-1 p-2" title="Design three">
+                    <span class="visually-hidden">
+                      Design three
+                    </span>
+                  </button>
+
+                  <button type="button" class="btn btn-danger rounded-5 m-1 p-2" title="Design four only in premium">
+                    <span class="visually-hidden">
+                      Design four
+                    </span>
+                  </button>
+                  <button type="button" class="btn btn-danger rounded-5 m-1 p-2" title="Design five only in premium">
+                    <span class="visually-hidden">
+                      Design five
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+
+              <!-- card back side starts -->
+              <div class="rounded d-inline-flex justify-content-center align-items-center" id="backSide"
+                style="background-color: {{defaultValues.card.color}}; border:solid 1px {{defaultValues.card.borderColor}};">
+                <div class="text-center m-1">
+                  <p class="lh-1 m-0 fw-semibold align-middle" ng-bind="defaultValues.addr1.text"
+                    style="font-size: {{defaultValues.addr1.size + 'px'}};color: {{defaultValues.addr1.color}};"
+                    ng-show="defaultValues.addr1.show">
+                  </p>
+
+                  <p class="lh-1 m-0 fw-semibold align-middle" ng-bind="defaultValues.addr2.text"
+                    style="font-size: {{defaultValues.addr2.size + 'px'}};color: {{defaultValues.addr2.color}};"
+                    ng-show="defaultValues.addr2.show">
+                  </p>
+
+                  <p class="lh-1 m-0 fw-semibold align-middle" ng-bind="defaultValues.postal.text"
+                    style="font-size: {{defaultValues.postal.size + 'px'}};color: {{defaultValues.postal.color}};"
+                    ng-show="defaultValues.postal.show">
+                  </p>
+
+                  <p class="m-0 fw-semibold align-middle" ng-show="defaultValues.web.show"
+                    ng-bind="defaultValues.web.text"
+                    style="font-size: {{defaultValues.web.size + 'px'}};color: {{defaultValues.web.color}};">
+                  </p>
+                </div>
+              </div>
+              <!-- card back side ends -->
+
+
+            </div>
+
+          </div>
+          <!-- col 1 ends -->
+
+          <!-- col 2 starts -->
+          <div class="col mb-3">
+
+            <div class="accordion" id="accordionExample">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                  <button class="accordion-button text-bg-dark" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <span>
+                      <span class="bi bi-postcard"></span>
+                      Card
+                    </span>
+                  </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse text-bg-dark show" aria-labelledby="headingOne"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body p-2">
+                    <table class="table table-borderless text-bg-dark">
+                      <thead>
+                        <tr class="align-middle">
+                          <th scope="row">
+                            Name
+                          </th>
+                          <th>
+                            Border color
+                          </th>
+                          <th>
+                            Background color
+                          </th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr class="align-middle">
+                          <td scope="row">
+
+                            <input class="form-control form-control-sm text-bg-dark" type="text"
+                              placeholder="{{defaultValues.card.text}}" ng-model="defaultValues.card.text" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-control form-control-sm form-control-color text-bg-dark" type="color"
+                              value="{{defaultValues.card.borderColor}}" ng-model="defaultValues.card.borderColor" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-control form-control-sm form-control-color text-bg-dark" type="color"
+                              value="{{defaultValues.card.color}}" ng-model="defaultValues.card.color" />
+
+                          </td>
+                        </tr>
+                        <tr class="align-middle">
+                          <td colspan="3">
+
+                            <p class="lh-1 m-0 mark rounded text-dark p-1">
+                              <small>
+                                <small>
+                                  <small>
+                                    * These are only for visualisation purpose only.
+                                  </small>
+                                </small>
+                              </small>
+                            </p>
+
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                  <button class="accordion-button text-bg-dark collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <span>
+                      <span class="bi bi-images"></span>
+                      Image / Photo / Logo
+                    </span>
+                  </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse text-bg-dark collapse" aria-labelledby="headingTwo"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body p-2">
+                    <table class="table table-borderless text-bg-dark">
+                      <thead>
+                        <tr class="align-middle">
+                          <th scope="row">
+                            #
+                          </th>
+                          <th class="w-50">
+                            <span>
+                              Image URL
+                              <small>1:1</small>
+                            </span>
+                          </th>
+                          <th class="w-50">
+                            Roundness
+                          </th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr class="align-middle">
+                          <td scope="row">
+                            <input class="form-check-input text-bg-dark" type="checkbox"
+                              ng-model="defaultValues.photo.show" />
+                          </td>
+                          <td>
+                            <input class="form-control form-control-sm text-bg-dark" type="text"
+                              placeholder="{{defaultValues.photo.url}}" ng-model="defaultValues.photo.url"
+                              ng-disabled="!defaultValues.photo.show" />
+                          </td>
+                          <td class="d-inline-flex justify-content-center align-items-center">
+
+                            <input class="form-range w-100 me-2 text-bg-dark" type="range"
+                              value="{{defaultValues.photo.size}}" min="0" max="50" ng-model="defaultValues.photo.size"
+                              ng-disabled="!defaultValues.photo.show" />
+
+                            <input class="form-control form-control-sm w-75 text-bg-dark" type="number"
+                              value="{{defaultValues.photo.size}}" ng-model="defaultValues.photo.size"
+                              ng-disabled="!defaultValues.photo.show" />
+
+                          </td>
+                        </tr>
+                        <tr class="align-middle">
+                          <td colspan="3">
+                            <p class="lh-1 m-0 mark rounded p-1 text-dark">
+                              <small>
+                                <small>
+                                  <small>
+                                    * Use <a href="https://imgur.com/upload" target="_blank"
+                                      title="Upload your image here">https://imgur.com/upload</a> to upload the
+                                    image and paste the direct image URL in above input field.
+                                  </small>
+                                </small>
+                              </small>
+                            </p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                  <button class="accordion-button collapsed text-bg-dark" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    <span>
+                      <span class="bi bi-border-style"></span>
+                      Icons / Line
+                    </span>
+                  </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse text-bg-dark" aria-labelledby="headingThree"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body p-2">
+                    <table class="table table-borderless text-bg-dark">
+                      <thead>
+                        <tr class="align-middle">
+                          <th scope="row">#</th>
+                          <th class="w-100">Size</th>
+                          <th class="w-25">Color</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr class="align-middle">
+                          <td scope="row">
+                            <input class="form-check-input text-bg-dark" type="checkbox"
+                              ng-model="defaultValues.icon.show" />
+                          </td>
+                          <td class="d-inline-flex align-items-center w-100">
+                            <input class="form-range w-100 me-2 text-bg-dark" type="range"
+                              value="{{defaultValues.icon.size}}" min="0" max="25" ng-model="defaultValues.icon.size"
+                              ng-disabled="!defaultValues.icon.show" />
+                            <input class="form-control form-control-sm w-50 text-bg-dark" type="number"
+                              value="{{defaultValues.icon.size}}" ng-model="defaultValues.icon.size"
+                              ng-disabled="!defaultValues.icon.show" />
+                          </td>
+                          <td>
+                            <input class="form-control form-control-sm form-control-color text-bg-dark" type="color"
+                              value="{{defaultValues.icon.color}}" ng-model="defaultValues.icon.color"
+                              ng-disabled="!defaultValues.icon.show" />
+                          </td>
+                        </tr>
+                        <tr class="align-middle">
+                          <td scope="row">
+                            <input class="form-check-input text-bg-dark" type="checkbox"
+                              ng-model="defaultValues.border.show" />
+                          </td>
+                          <td class="d-inline-flex align-items-center w-100">
+                            <input class="form-range w-100 me-2 text-bg-dark" type="range"
+                              value="{{defaultValues.border.size}}" min="0" max="25"
+                              ng-model="defaultValues.border.size" ng-disabled="!defaultValues.border.show" />
+                            <input class="form-control form-control-sm w-50 text-bg-dark" type="number"
+                              value="{{defaultValues.border.size}}" ng-model="defaultValues.border.size"
+                              ng-disabled="!defaultValues.border.show" />
+                          </td>
+                          <td>
+                            <input class="form-control form-control-sm form-control-color text-bg-dark" type="color"
+                              value="{{defaultValues.border.color}}" ng-model="defaultValues.border.color"
+                              ng-disabled="!defaultValues.border.show" />
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFour">
+                  <button class="accordion-button collapsed text-bg-dark" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    <span>
+                      <span class="bi bi-card-text"></span>
+                      All texts
+                    </span>
+                  </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse text-bg-dark" aria-labelledby="headingFour"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <table class="table text-bg-dark">
+                      <thead>
+                        <tr class="align-middle">
+                          <th scope="row">#</th>
+                          <th class="w-50">Text</th>
+                          <th class="w-50">Size</th>
+                          <th>Color</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr class="align-middle">
+                          <td scope="row">
+
+                            <input class="form-check-input text-bg-dark" type="checkbox"
+                              ng-model="defaultValues.title.show" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-control form-control-sm text-bg-dark" type="text"
+                              placeholder="{{defaultValues.title.text}}" ng-model="defaultValues.title.text"
+                              ng-disabled="!defaultValues.title.show" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-range text-bg-dark" type="range" value="{{defaultValues.title.size}}"
+                              min="0" max="50" ng-model="defaultValues.title.size"
+                              ng-disabled="!defaultValues.title.show" />
+
+                            <input class="form-control form-control-sm text-bg-dark" type="number"
+                              value="{{defaultValues.title.size}}" ng-model="defaultValues.title.size"
+                              ng-disabled="!defaultValues.title.show" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-control form-control-sm form-control-color text-bg-dark" type="color"
+                              value="{{defaultValues.title.color}}" ng-model="defaultValues.title.color"
+                              ng-disabled="!defaultValues.title.show" />
+
+                          </td>
+                        </tr>
+                        <tr class="align-middle">
+                          <td scope="row">
+
+                            <input class="form-check-input text-bg-dark" type="checkbox"
+                              ng-model="defaultValues.subTitle.show" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-control form-control-sm text-bg-dark" type="text"
+                              placeholder="{{defaultValues.subTitle.text}}" ng-model="defaultValues.subTitle.text"
+                              ng-disabled="!defaultValues.subTitle.show" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-range text-bg-dark" type="range" value="{{defaultValues.subTitle.size}}"
+                              min="0" max="35" ng-model="defaultValues.subTitle.size"
+                              ng-disabled="!defaultValues.subTitle.show" />
+
+                            <input class="form-control form-control-sm text-bg-dark" type="number"
+                              value="{{defaultValues.subTitle.size}}" ng-model="defaultValues.subTitle.size"
+                              ng-disabled="!defaultValues.subTitle.show" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-control form-control-sm form-control-color text-bg-dark" type="color"
+                              value="{{defaultValues.subTitle.color}}" ng-model="defaultValues.subTitle.color"
+                              ng-disabled="!defaultValues.subTitle.show" />
+
+                          </td>
+                        </tr>
+                        <tr class="align-middle">
+                          <td scope="row">
+
+                            <input class="form-check-input text-bg-dark" type="checkbox"
+                              ng-model="defaultValues.number.show" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-control form-control-sm text-bg-dark" type="text"
+                              placeholder="{{defaultValues.number.text}}" ng-model="defaultValues.number.text"
+                              ng-disabled="!defaultValues.number.show" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-range text-bg-dark" type="range" value="{{defaultValues.number.size}}"
+                              min="0" max="25" ng-model="defaultValues.number.size"
+                              ng-disabled="!defaultValues.number.show" />
+
+                            <input class="form-control form-control-sm text-bg-dark" type="number"
+                              value="{{defaultValues.number.size}}" ng-model="defaultValues.number.size"
+                              ng-disabled="!defaultValues.number.show" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-control form-control-sm form-control-color text-bg-dark" type="color"
+                              value="{{defaultValues.number.color}}" ng-model="defaultValues.number.color"
+                              ng-disabled="!defaultValues.number.show" />
+
+                          </td>
+                        </tr>
+                        <tr class="align-middle">
+                          <td scope="row">
+
+                            <input class="form-check-input text-bg-dark" type="checkbox"
+                              ng-model="defaultValues.email.show" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-control form-control-sm text-bg-dark" type="text"
+                              placeholder="{{defaultValues.email.text}}" ng-model="defaultValues.email.text"
+                              ng-disabled="!defaultValues.email.show" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-range text-bg-dark" type="range" value="{{defaultValues.email.size}}"
+                              min="0" max="25" ng-model="defaultValues.email.size"
+                              ng-disabled="!defaultValues.email.show" />
+
+                            <input class="form-control form-control-sm text-bg-dark" type="number"
+                              value="{{defaultValues.email.size}}" ng-model="defaultValues.email.size"
+                              ng-disabled="!defaultValues.email.show" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-control form-control-sm form-control-color text-bg-dark" type="color"
+                              value="{{defaultValues.email.color}}" ng-model="defaultValues.email.color"
+                              ng-disabled="!defaultValues.email.show" />
+
+                          </td>
+                        </tr>
+                        <tr class="align-middle">
+                          <td scope="row">
+
+                            <input class="form-check-input text-bg-dark" type="checkbox"
+                              ng-model="defaultValues.addr1.show" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-control form-control-sm text-bg-dark" type="text"
+                              placeholder="{{defaultValues.addr1.text}}" ng-model="defaultValues.addr1.text"
+                              ng-disabled="!defaultValues.addr1.show" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-range text-bg-dark" type="range" value="{{defaultValues.addr1.size}}"
+                              min="0" max="25" ng-model="defaultValues.addr1.size"
+                              ng-disabled="!defaultValues.addr1.show" />
+
+                            <input class="form-control form-control-sm text-bg-dark" type="number"
+                              value="{{defaultValues.addr1.size}}" ng-model="defaultValues.addr1.size"
+                              ng-disabled="!defaultValues.addr1.show" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-control form-control-sm form-control-color text-bg-dark" type="color"
+                              value="{{defaultValues.addr1.color}}" ng-model="defaultValues.addr1.color"
+                              ng-disabled="!defaultValues.addr1.show" />
+
+                          </td>
+                        </tr>
+                        <tr class="align-middle">
+                          <td scope="row">
+
+                            <input class="form-check-input text-bg-dark" type="checkbox"
+                              ng-model="defaultValues.addr2.show" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-control form-control-sm text-bg-dark" type="text"
+                              placeholder="{{defaultValues.addr2.text}}" ng-model="defaultValues.addr2.text"
+                              ng-disabled="!defaultValues.addr2.show" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-range text-bg-dark" type="range" value="{{defaultValues.addr2.size}}"
+                              min="0" max="25" ng-model="defaultValues.addr2.size"
+                              ng-disabled="!defaultValues.addr2.show" />
+
+                            <input class="form-control form-control-sm text-bg-dark" type="number"
+                              value="{{defaultValues.addr2.size}}" ng-model="defaultValues.addr2.size"
+                              ng-disabled="!defaultValues.addr2.show" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-control form-control-sm form-control-color text-bg-dark" type="color"
+                              value="{{defaultValues.addr2.color}}" ng-model="defaultValues.addr2.color"
+                              ng-disabled="!defaultValues.addr2.show" />
+
+                          </td>
+                        </tr>
+                        <tr class="align-middle">
+                          <td scope="row">
+
+                            <input class="form-check-input text-bg-dark" type="checkbox"
+                              ng-model="defaultValues.postal.show" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-control form-control-sm text-bg-dark" type="text"
+                              placeholder="{{defaultValues.postal.text}}" ng-model="defaultValues.postal.text"
+                              ng-disabled="!defaultValues.postal.show" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-range text-bg-dark" type="range" value="{{defaultValues.postal.size}}"
+                              min="0" max="25" ng-model="defaultValues.postal.size"
+                              ng-disabled="!defaultValues.postal.show" />
+
+                            <input class="form-control form-control-sm text-bg-dark" type="number"
+                              value="{{defaultValues.postal.size}}" ng-model="defaultValues.postal.size"
+                              ng-disabled="!defaultValues.postal.show" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-control form-control-sm form-control-color text-bg-dark" type="color"
+                              value="{{defaultValues.postal.color}}" ng-model="defaultValues.postal.color"
+                              ng-disabled="!defaultValues.postal.show" />
+
+                          </td>
+                        </tr>
+                        <tr class="align-middle">
+                          <td scope="row">
+
+                            <input class="form-check-input text-bg-dark" type="checkbox"
+                              ng-model="defaultValues.web.show" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-control form-control-sm text-bg-dark" type="text"
+                              placeholder="{{defaultValues.web.text}}" ng-model="defaultValues.web.text"
+                              ng-disabled="!defaultValues.web.show" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-range text-bg-dark" type="range" value="{{defaultValues.web.size}}"
+                              min="0" max="25" ng-model="defaultValues.web.size"
+                              ng-disabled="!defaultValues.web.show" />
+
+                            <input class="form-control form-control-sm text-bg-dark" type="number"
+                              value="{{defaultValues.web.size}}" ng-model="defaultValues.web.size"
+                              ng-disabled="!defaultValues.web.show" />
+
+                          </td>
+                          <td>
+
+                            <input class="form-control form-control-sm form-control-color text-bg-dark" type="color"
+                              value="{{defaultValues.web.color}}" ng-model="defaultValues.web.color"
+                              ng-disabled="!defaultValues.web.show" />
+
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFive">
+                  <button class="accordion-button collapsed text-bg-dark" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                    <span>
+                      <span class="bi bi-gear"></span>
+                      Downloads
+                    </span>
+                  </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse text-bg-dark" aria-labelledby="headingFive"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body p-2">
+                    <div class="col-12 d-flex justify-content-between align-items-center">
+                      <p>
+                        <span>{{defaultValues.card.text}}</span>
+                        <span>FRONT SIDE</span>
+                      </p>
+                      <button type="button" class="btn btn-primary btn-sm" ng-click="_saveAsImg('#frontSide')">
+                        <span class="bi bi-save">
+                        </span>
+                        Save
+                      </button>
+                    </div>
+
+                    <div class="col-12 d-flex justify-content-between align-items-center">
+                      <p>{{defaultValues.card.text}} BACK SIDE</p>
+                      <button type="button" class="btn btn-primary btn-sm" ng-click="_saveAsImg('#backSide')">
+                        <span class="bi bi-save">
+                        </span>
+                        Save
+                      </button>
+                    </div>
+
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+          <!-- col 2 ends -->
+
+        </div>
+
+
+
+        <script>
+
+          var app = angular.module('cardApp', []);
+
+          app.controller('cardCtrl', function ($scope) {
+
+            $scope.defaultValues = {
+              card: { color: '#f5f5f5', borderColor: '#e6e6e6', text: 'My Business Card' },
+              photo: { size: '25', url: 'https://i.imgur.com/xxfAdP1.png', show: true },
+              title: { size: '30', color: '#323232', text: 'Apple', show: true },
+              subTitle: { size: '20', color: '#323232', text: 'Apple Enterprise Sales', show: true },
+              border: { size: '1', color: '#323232', show: true },
+              icon: { size: '11', color: '#323232', show: true },
+              number: { size: '11', color: '#323232', text: '(408) 996 1010', show: true },
+              email: { size: '11', color: '#323232', text: 'apple@apple.com', show: true },
+              addr1: { size: '15', color: '#323232', text: 'One Apple Park Way', show: true },
+              addr2: { size: '15', color: '#323232', text: 'Cupertino,', show: true },
+              postal: { size: '15', color: '#323232', text: 'CA 95014', show: true },
+              web: { size: '15', color: '#323232', text: 'www.apple.com', show: true }
+            }
+
+            $scope._saveAsImg = function (side) {
+              _capture = document.querySelector(side);
+              // FileSaver.min.js
+              function _save(canvas) {
+                canvas.toBlob(function (blob) {
+                  saveAs(blob, $scope.defaultValues.card.text + " " + side + ".png");
+                });
+              }
+              // html2canvas.min.js
+              html2canvas(_capture, {
+                width: 385,
+                height: 220,
+                logging: true,
+                scale: 2,
+                allowTaint: true,
+                // foreignObjectRendering: true,
+                imageTimeout: 0,
+                useCORS: true
+              }).then(function (canvas) {
+                _save(canvas);
+              });
+            };
+
+          });
+
+        </script>
+
+
+
+      </div>
+
+
+    </main>
+  </section>
+
+  <section>
+    <footer>
+      <div class='container text-center p-3'>
+        <p class='text-white-50 m-0'>
+          code with &#10084;
+        </p>
+      </div>
+    </footer>
+  </section>
+
+
+  <script src="js/html2canvas.min.js"></script>
+  <script src="js/FileSaver.min.js"></script>
+  <script src='js/bootstrap.bundle.min.js'></script>
+
+
+</body>
+
+</html>
